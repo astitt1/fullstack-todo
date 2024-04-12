@@ -22,7 +22,7 @@ function App() {
   const fetchNotes = async () => {
     try {
       // Fetch the notes
-      const res = await axios.get("http://localhost:5000/notes");
+      const res = await axios.get("https://fullstack-todo-n7bl.onrender.com/notes");
       console.log(res.data)
       // Set to state
       setNotes(res.data.notes);
@@ -43,7 +43,7 @@ function App() {
   const createNote = async (e) => {
     e.preventDefault();
 
-    const res = await axios.post("http://localhost:5000/notes", createForm);
+    const res = await axios.post("https://fullstack-todo-n7bl.onrender.com/notes", createForm);
 
     setNotes([...notes, res.data.note]);
 
@@ -55,7 +55,7 @@ function App() {
 
   const deleteNote = async (_id) => {
     // Delete the note
-    await axios.delete(`http://localhost:5000/notes/${_id}`);
+    await axios.delete(`https://fullstack-todo-n7bl.onrender.com/notes/${_id}`);
 
     // Update state
     const newNotes = await [...notes].filter((note) => {
@@ -86,7 +86,7 @@ function App() {
 
     // Send the update request
     const res = await axios.put(
-      `http://localhost:5000/notes/${updateForm._id}`,
+      `https://fullstack-todo-n7bl.onrender.com/notes/${updateForm._id}`,
       { title, body }
     );
 
