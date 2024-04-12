@@ -20,11 +20,15 @@ function App() {
   }, []);
 
   const fetchNotes = async () => {
-    // Fetch the notes
-    const res = await axios.get("http://localhost:3000/notes");
-
-    // Set to state
-    setNotes(res.data.notes);
+    try {
+      // Fetch the notes
+      const res = await axios.get("http://localhost:5000/notes");
+      console.log(res.data)
+      // Set to state
+      setNotes(res.data.notes);
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   const updateCreateFormField = (e) => {
@@ -39,7 +43,7 @@ function App() {
   const createNote = async (e) => {
     e.preventDefault();
 
-    const res = await axios.post("http://localhost:3000/notes", createForm);
+    const res = await axios.post("http://localhost:5000/notes", createForm);
 
     setNotes([...notes, res.data.note]);
 
@@ -51,10 +55,10 @@ function App() {
 
   const deleteNote = async (_id) => {
     // Delete the note
-    const res = await axios.delete(`http://localhost:3000/notes/${_id}`);
+    await axios.delete(`http://localhost:5000/notes/${_id}`);
 
     // Update state
-    const newNotes = [...notes].filter((note) => {
+    const newNotes = await [...notes].filter((note) => {
       return note._id !== _id;
     });
 
@@ -82,7 +86,7 @@ function App() {
 
     // Send the update request
     const res = await axios.put(
-      `http://localhost:3000/notes/${updateForm._id}`,
+      `http://localhost:5000/notes/${updateForm._id}`,
       { title, body }
     );
 
@@ -104,7 +108,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className='App'>
       <div>
         <h2>Notes:</h2>
         {notes &&
@@ -128,14 +132,14 @@ function App() {
             <input
               onChange={handleUpdateFieldChange}
               value={updateForm.title}
-              name="title"
+              name='title'
             />
             <textarea
               onChange={handleUpdateFieldChange}
               value={updateForm.body}
-              name="body"
+              name='body'
             />
-            <button type="submit">Update note</button>
+            <button type='submit'>Update note</button>
           </form>
         </div>
       )}
@@ -147,14 +151,14 @@ function App() {
             <input
               onChange={updateCreateFormField}
               value={createForm.title}
-              name="title"
+              name='title'
             />
             <textarea
               onChange={updateCreateFormField}
               value={createForm.body}
-              name="body"
+              name='body'
             />
-            <button type="submit">Create note</button>
+            <button type='submit'>Create note</button>
           </form>
         </div>
       )}

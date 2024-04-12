@@ -27,4 +27,6 @@ app.put("/notes/:id", notesController.updateNote);
 app.delete("/notes/:id", notesController.deleteNote);
 
 // Start our server
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, ()=>{
+  console.log(`connected to port: ${process.env.PORT}`)
+});
